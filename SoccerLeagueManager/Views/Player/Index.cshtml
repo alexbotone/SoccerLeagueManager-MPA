@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SoccerLeagueManager.Models.PlayerModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDPlayer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Team)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Value_EUR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdTeam)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDPlayer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Team)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Value_EUR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdTeam)
+        </td>
+        <td>
+            @{ 
+                if (User.IsInRole("Admin") || User.IsInRole("User"))
+                {
+                 @Html.ActionLink("Edit", "Edit", new { id = item.IDPlayer })
+                }
+              }
+
+            @Html.ActionLink("Details", "Details", new { id = item.IDPlayer })
+
+            @{ 
+                if (User.IsInRole("Admin"))
+                {
+                  @Html.ActionLink("Delete", "Delete", new { id = item.IDPlayer })
+                }
+             }
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class='panel panel-primary'>
+        <div class='panel-heading'>
+            Teams
+        </div>
+        <div class='panel-body'>
+            <div class='table-responsive'>
+                <div style="padding-bottom:10px"><button class="btn btnprimary" (click)="addTeam()">Add</button></div>
+                <div class="alert alertinfo" role="alert" *ngIf="indLoading">
+                    Loading...
+                </div>
+                <div *ngIf='teams && teams.length==0' class="alert alertinfo" role="alert">No record found!</div>
+                <table class='table tablestriped' *ngIf='teams && teams.length'>
+                    <thead>
+                        <tr>
+                            <th>IDTeam</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>Email</th>
+                            <th>IdLeague</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let team of teams">
+                            <td>{{team.IDTeam}}</td>
+                            <td>{{team.Name}}</td>
+                            <td>{{team.City}}</td>
+                            <td>{{team.Email}}</td>
+                            <td>{{team.IdLeague}}</td>
+                            <td>
+                                <button title="Edit" class="btn btnprimary" (click)="editTeam(team.IDTeam)">Edit</button>
+                                <button title="Delete" class="btn btndanger" (click)="deleteTeam(team.IDTeam)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                </div>
+            </div>
+            <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-exclamation-sign" ariahidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{msg}}
+            </div>
+        </div>
+    </div>
+    <modal #modal>
+        <form novalidate (ngSubmit)="onSubmit(modalForm)" [formGroup]="modalForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </modal-header>
+            <modal-body>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" class="formcontrol" placeholder="IDTeam" formControlName="IDTeam">
+                    </div>
+                    <div>
+                        <span>Name*</span>
+                        <input type="text" class="formcontrol" placeholder="Name" formControlName="Name">
+                    </div>
+                    <div>
+                        <span>City*</span>
+                        <input type="text" class="formcontrol" placeholder="City" formControlName="City">
+                    </div>
+                    <div>
+                        <span>Email*</span>
+                        <input type="text" class="formcontrol" placeholder="Email" formControlName="Email">
+                    </div>
+                    <div>
+                        <span>IdLeague*</span>
+                        <input type="text" class="formcontrol" placeholder="IdLeague" formControlName="IdLeague">
+                    </div>
+                </div>
+            </modal-body>
+            <modal-footer>
+                <div>
+                    <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                    <button type="submit" [disabled]="modalForm.invalid" class="btn btn-primary">
+                        {{modalBtnTitle}}
+                    </button>
+                </div>
+            </modal-footer>
+        </form>
+    </modal>
+</body>
+</html>

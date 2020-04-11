@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="soccer" Class="SoccerDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\soccer.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="soccerConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Leagues" Member="Leagues">
+    <Type Name="League">
+      <Column Name="IDLeague" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NameLeague" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumberOfTeams" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sponsor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="League_SoccerMatch" Member="SoccerMatches" ThisKey="IDLeague" OtherKey="IdLeague" Type="SoccerMatch" />
+      <Association Name="League_Team" Member="Teams" ThisKey="IDLeague" OtherKey="IdLeague" Type="Team" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Players" Member="Players">
+    <Type Name="Player">
+      <Column Name="IDPlayer" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Position" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Team" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Value_EUR" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTeam" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Team_Player" Member="Team1" ThisKey="IdTeam" OtherKey="IDTeam" Type="Team" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SoccerMatches" Member="SoccerMatches">
+    <Type Name="SoccerMatch">
+      <Column Name="IDMatch" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="HomeTeam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="GuestTeam" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Stadium" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IdLeague" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="League_SoccerMatch" Member="League" ThisKey="IdLeague" OtherKey="IDLeague" Type="League" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teams" Member="Teams">
+    <Type Name="Team">
+      <Column Name="IDTeam" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IdLeague" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Team_Player" Member="Players" ThisKey="IDTeam" OtherKey="IdTeam" Type="Player" />
+      <Association Name="League_Team" Member="League" ThisKey="IdLeague" OtherKey="IDLeague" Type="League" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class='panel panel-primary'>
+        <div class='panel-heading'>
+            Leagues
+        </div>
+        <div class='panel-body'>
+            <div class='table-responsive'>
+                <div style="padding-bottom:10px"><button class="btn btnprimary" (click)="addLeague()">Add</button></div>
+                <div class="alert alertinfo" role="alert" *ngIf="indLoading">
+                    Loading...
+                </div>
+                <div *ngIf='leagues && leagues.length==0' class="alert alertinfo" role="alert">No record found!</div>
+                <table class='table tablestriped' *ngIf='leagues && leagues.length'>
+                    <thead>
+                        <tr>
+                            <th>IDLeague</th>
+                            <th>NameLeague</th>
+                            <th>Country</th>
+                            <th>NumberOfTeams</th>
+                            <th>Sponsor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let league of leagues">
+                            <td>{{league.IDLeague}}</td>
+                            <td>{{league.NameLeague}}</td>
+                            <td>{{league.Country}}</td>
+                            <td>{{league.NumberOfTeams}}</td>
+                            <td>{{league.Sponsor}}</td>
+                            <td>
+                                <button title="Edit" class="btn btnprimary" (click)="editLeague(league.IDLeague)">Edit</button>
+                                <button title="Delete" class="btn btndanger" (click)="deleteLeague(league.IDLeague)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                </div>
+            </div>
+            <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-exclamation-sign" ariahidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{msg}}
+            </div>
+        </div>
+    </div>
+    <modal #modal>
+        <form novalidate (ngSubmit)="onSubmit(modalForm)" [formGroup]="modalForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </modal-header>
+            <modal-body>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" class="formcontrol" placeholder="IDLeague" formControlName="IDLeague">
+                    </div>
+                    <div>
+                        <span>NameLeague*</span>
+                        <input type="text" class="formcontrol" placeholder="NameLeague" required maxlength="50" formControlName="NameLeague">
+                    </div>
+                    <div>
+                        <span>Country*</span>
+                        <input type="text" class="formcontrol" placeholder="Country" formControlName="Country">
+                    </div>
+                    <div>
+                        <span>NumberOfTeams*</span>
+                        <input type="text" class="formcontrol" placeholder="NumberOfTeams" formControlName="NumberOfTeams">
+                    </div>
+                    <div>
+                        <span>Sponsor*</span>
+                        <input type="text" class="formcontrol" placeholder="Sponsor" formControlName="Sponsor">
+                    </div>
+                </div>
+            </modal-body>
+            <modal-footer>
+                <div>
+                    <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                    <button type="submit" [disabled]="modalForm.invalid" class="btn btn-primary">
+                        {{modalBtnTitle}}
+                    </button>
+                </div>
+            </modal-footer>
+        </form>
+    </modal>
+</body>
+</html>

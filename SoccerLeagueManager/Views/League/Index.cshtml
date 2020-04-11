@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SoccerLeagueManager.Models.LeagueModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDLeague)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NameLeague)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfTeams)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sponsor)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDLeague)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameLeague)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfTeams)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sponsor)
+        </td>
+        <td>
+           @{    
+               if (User.IsInRole("Admin"))
+               {
+                     @Html.ActionLink("Edit", "Edit", new { id = item.IDLeague })
+               }
+            }
+
+            @Html.ActionLink("Details", "Details", new { id = item.IDLeague })
+
+            @{ 
+                if (User.IsInRole("Admin"))
+                {
+                     @Html.ActionLink("Delete", "Delete", new { id = item.IDLeague })
+                }
+             }
+        </td>
+    </tr>
+}
+
+</table>

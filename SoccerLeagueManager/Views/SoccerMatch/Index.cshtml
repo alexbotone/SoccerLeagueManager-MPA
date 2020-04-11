@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SoccerLeagueManager.Models.SoccerMatchModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDMatch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HomeTeam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GuestTeam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stadium)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdLeague)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IDMatch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeTeam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestTeam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stadium)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdLeague)
+            </td>
+            <td>
+                @{ 
+                    if (User.IsInRole("Admin") || User.IsInRole("User"))
+                        {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IDMatch })
+                    }
+                }
+
+
+                @Html.ActionLink("Details", "Details", new { id = item.IDMatch })
+
+                @{ 
+                    if (User.IsInRole("Admin"))
+                    {
+                       @Html.ActionLink("Delete", "Delete", new { id = item.IDMatch })
+                    }
+                 }
+            </td>
+        </tr>
+    }
+
+</table>

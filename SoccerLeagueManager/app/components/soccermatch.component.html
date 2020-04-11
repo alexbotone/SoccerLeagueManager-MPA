@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class='panel panel-primary'>
+        <div class='panel-heading'>
+            SoccerMatches
+        </div>
+        <div class='panel-body'>
+            <div class='table-responsive'>
+                <div style="padding-bottom:10px"><button class="btn btnprimary" (click)="addSoccerMatch()">Add</button></div>
+                <div class="alert alertinfo" role="alert" *ngIf="indLoading">
+                    Loading...
+                </div>
+                <div *ngIf='soccermatches && soccermatches.length==0' class="alert alertinfo" role="alert">No record found!</div>
+                <table class='table tablestriped' *ngIf='soccermatches && soccermatches.length'>
+                    <thead>
+                        <tr>
+                            <th>IDMatch</th>
+                            <th>HomeTeam</th>
+                            <th>GuestTeam</th>
+                            <th>Stadium</th>
+                            <th>City</th>
+                            <th>IdLeague</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let soccermatch of soccermatches">
+                            <td>{{soccermatch.IDMatch}}</td>
+                            <td>{{soccermatch.HomeTeam}}</td>
+                            <td>{{soccermatch.GuestTeam}}</td>
+                            <td>{{soccermatch.Stadium}}</td>
+                            <td>{{soccermatch.City}}</td>
+                            <td>{{soccermatch.IdLeague}}</td>
+                            <td>
+                                <button title="Edit" class="btn btnprimary" (click)="editSoccerMatch(soccermatch.IDMatch)">Edit</button>
+                                <button title="Delete" class="btn btndanger" (click)="deleteSoccerMatch(soccermatch.IDMatch)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                </div>
+            </div>
+            <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-exclamation-sign" ariahidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{msg}}
+            </div>
+        </div>
+    </div>
+    <modal #modal>
+        <form novalidate (ngSubmit)="onSubmit(modalForm)" [formGroup]="modalForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </modal-header>
+            <modal-body>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" class="formcontrol" placeholder="IDMatch" formControlName="IDMatch">
+                    </div>
+                    <div>
+                        <span>HomeTeam*</span>
+                        <input type="text" class="formcontrol" placeholder="HomeTeam" formControlName="HomeTeam">
+                    </div>
+                    <div>
+                        <span>GuestTeam*</span>
+                        <input type="text" class="formcontrol" placeholder="GuestTeam" formControlName="GuestTeam">
+                    </div>
+                    <div>
+                        <span>Stadium*</span>
+                        <input type="text" class="formcontrol" placeholder="Stadium" formControlName="Stadium">
+                    </div>
+                    <div>
+                        <span>City*</span>
+                        <input type="text" class="formcontrol" placeholder="City" formControlName="City">
+                    </div>
+                    <div>
+                        <span>IdLeague*</span>
+                        <input type="text" class="formcontrol" placeholder="IdLeague" formControlName="IdLeague">
+                    </div>
+         
+                </div>
+            </modal-body>
+            <modal-footer>
+                <div>
+                    <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                    <button type="submit" [disabled]="modalForm.invalid" class="btn btn-primary">
+                        {{modalBtnTitle}}
+                    </button>
+                </div>
+            </modal-footer>
+        </form>
+    </modal>
+</body>
+</html>

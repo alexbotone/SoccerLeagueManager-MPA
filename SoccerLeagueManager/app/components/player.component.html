@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class='panel panel-primary'>
+        <div class='panel-heading'>
+            Players
+        </div>
+        <div class='panel-body'>
+            <div class='table-responsive'>
+                <div style="padding-bottom:10px"><button class="btn btnprimary" (click)="addPlayer()">Add</button></div>
+                <div class="alert alertinfo" role="alert" *ngIf="indLoading">
+                    Loading...
+                </div>
+                <div *ngIf='players && players.length==0' class="alert alertinfo" role="alert">No record found!</div>
+                <table class='table tablestriped' *ngIf='players && players.length'>
+                    <thead>
+                        <tr>
+                            <th>IDPlayer</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Position</th>
+                            <th>Team</th>
+                            <th>Value_EUR</th>
+                            <th>IdTeam</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let player of players">
+                            <td>{{player.IDPlayer}}</td>
+                            <td>{{player.Name}}</td>
+                            <td>{{player.Surname}}</td>
+                            <td>{{player.Position}}</td>
+                            <td>{{player.Team}}</td>
+                            <td>{{player.Value_EUR}}</td>
+                            <td>{{player.IdTeam}}</td>
+                            <td>
+                                <button title="Edit" class="btn btnprimary" (click)="editPlayer(player.IDPlayer)">Edit</button>
+                                <button title="Delete" class="btn btndanger" (click)="deletePlayer(player.IDPlayer)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                </div>
+            </div>
+            <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" arialabel="Close"><span aria-hidden="true">&times;</span></button>
+                <span class="glyphicon glyphicon-exclamation-sign" ariahidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{msg}}
+            </div>
+        </div>
+    </div>
+    <modal #modal>
+        <form novalidate (ngSubmit)="onSubmit(modalForm)" [formGroup]="modalForm">
+            <modal-header [show-close]="true">
+                <h4 class="modal-title">{{modalTitle}}</h4>
+            </modal-header>
+            <modal-body>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" class="formcontrol" placeholder="IDPlayer" formControlName="IDPlayer">
+                    </div>
+                    <div>
+                        <span>Name*</span>
+                        <input type="text" class="formcontrol" placeholder="Name" formControlName="Name">
+                    </div>
+                    <div>
+                        <span>Surname*</span>
+                        <input type="text" class="formcontrol" placeholder="Surname" formControlName="Surname">
+                    </div>
+                    <div>
+                        <span>Position*</span>
+                        <input type="text" class="formcontrol" placeholder="Position" formControlName="Position">
+                    </div>
+                    <div>
+                        <span>Team*</span>
+                        <input type="text" class="formcontrol" placeholder="Team" formControlName="Team">
+                    </div>
+                    <div>
+                        <span>Value_EUR*</span>
+                        <input type="text" class="formcontrol" placeholder="Value_EUR" formControlName="Value_EUR">
+                    </div>
+                    <div>
+                        <span>IdTeam*</span>
+                        <input type="text" class="formcontrol" placeholder="IdTeam" formControlName="IdTeam">
+                    </div>
+                </div>
+            </modal-body>
+            <modal-footer>
+                <div>
+                    <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                    <button type="submit" [disabled]="modalForm.invalid" class="btn btn-primary">
+                        {{modalBtnTitle}}
+                    </button>
+                </div>
+            </modal-footer>
+        </form>
+    </modal>
+</body>
+</html>
